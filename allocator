@@ -1,0 +1,222 @@
+# -test-drive-
+To project forward pricing and project liquidity of sources in financial panic.
+File:
+Allocator.cpp
+ Project: 
+silviubaranga's SHP
+1 //===--- Allocator.cpp - Simple memory allocation abstraction -------------===//
+2 //
+3 //                     The LLVM Compiler Infrastructure
+4 //
+5 // This file is distributed under the University of Illinois Open Source
+14 #include "llvm/Support/Allocator.h"
+15 #include "llvm/System/DataTypes.h"
+16 #include "llvm/Support/Recycler.h"
+17 #include "llvm/Support/raw_ostream.h"
+18 #include "llvm/System/Memory.h"
+24                                    SlabAllocator &allocator)
+25     : SlabSize(size), SizeThreshold(threshold), Allocator(allocator),
+26       CurSlab(0), BytesAllocated(0) {
+27   StartNewSlab();
+28 }
+49   MemSlab *NewSlab = Allocator.Allocate(SlabSize);
+50   NewSlab->NextPtr = CurSlab;
+51   CurSlab = NewSlab;
+52   CurPtr = (char*)(CurSlab + 1);
+53   End = ((char*)CurSlab) + CurSlab->Size;
+
+Code Location:  
+git://github.com/silviubaranga/SHP.gitmaster
+File Path:
+  
+llvm/lib/Support/Allocator.cpp
+File:
+Allocator.cpp
+ Project: 
+summer2012
+1 //===--- Allocator.cpp - Simple memory allocation abstraction -------------===//
+2 //
+3 //                     The LLVM Compiler Infrastructure
+4 //
+5 // This file is distributed under the University of Illinois Open Source
+14 #include "llvm/Support/Allocator.h"
+15 #include "llvm/Support/DataTypes.h"
+16 #include "llvm/Support/Recycler.h"
+17 #include "llvm/Support/raw_ostream.h"
+18 #include "llvm/Support/Memory.h"
+24                                    SlabAllocator &allocator)
+25     : SlabSize(size), SizeThreshold(std::min(size, threshold)),
+26       Allocator(allocator), CurSlab(0), BytesAllocated(0) { }
+27
+28 BumpPtrAllocator::~BumpPtrAllocator() {
+29   DeallocateSlabs(CurSlab);
+30 }
+53   MemSlab *NewSlab = Allocator.Allocate(SlabSize);
+54   NewSlab->NextPtr = CurSlab;
+55   CurSlab = NewSlab;
+56   CurPtr = (char*)(CurSlab + 1);
+57   End = ((char*)CurSlab) + CurSlab->Size;
+
+Code Location:  
+git://github.com/uoft-tsa/summer2012.gitmaster
+File Path:
+  
+llvm/lib/Support/Allocator.cpp
+File:
+Allocator.cpp
+ Project: 
+bhyve
+1 //===--- Allocator.cpp - Simple memory allocation abstraction -------------===//
+2 //
+3 //                     The LLVM Compiler Infrastructure
+4 //
+5 // This file is distributed under the University of Illinois Open Source
+14 #include "llvm/Support/Allocator.h"
+15 #include "llvm/Support/DataTypes.h"
+16 #include "llvm/Support/Recycler.h"
+17 #include "llvm/Support/raw_ostream.h"
+18 #include "llvm/Support/Memory.h"
+24                                    SlabAllocator &allocator)
+25     : SlabSize(size), SizeThreshold(std::min(size, threshold)),
+26       Allocator(allocator), CurSlab(0), BytesAllocated(0) { }
+27
+28 BumpPtrAllocator::~BumpPtrAllocator() {
+29   DeallocateSlabs(CurSlab);
+30 }
+53   MemSlab *NewSlab = Allocator.Allocate(SlabSize);
+54   NewSlab->NextPtr = CurSlab;
+55   CurSlab = NewSlab;
+56   CurPtr = (char*)(CurSlab + 1);
+57   End = ((char*)CurSlab) + CurSlab->Size;
+
+Code Location:  
+git://github.com/lattera/bhyve.gitmaster
+File Path:
+  
+contrib/llvm/lib/Support/Allocator.cpp
+File:
+Allocator.cpp
+ Project: 
+Pentagram
+20 #include "Allocator.h"
+21
+22 // p_dynamic_cast stuff
+23 DEFINE_RUNTIME_CLASSTYPE_CODE_BASE_CLASS(Allocator);
+24
+25 Allocator::Allocator()
+26 {
+27 }
+28
+29 Allocator::~Allocator()
+30 {
+31 }
+
+Code Location:  
+https://svn.code.sf.net/p/pentagram/code/pentagram/trunk/pentagram/trunk
+File Path:
+  
+kernel/Allocator.cpp
+Copyright:
+(C) 2003-2005 The Pentagram team
+File:
+allocator.cpp
+ Project: 
+0xdroid
+19 #include "allocator.h"
+20
+21
+22 // align all the memory blocks on a cache-line boundary
+23 const int SimpleBestFitAllocator::kMemoryAlign = 32;
+
+Code Location:  
+git://gitorious.org/0xdroid/hardware_libhardware.gitmaster
+File Path:
+  
+modules/gralloc/allocator.cpp
+Copyright:
+(C) 2009 The Android Open Source Project
+File:
+allocator.cpp
+ Project: 
+android_device_softwinner
+19 #include "allocator.h"
+20
+21
+22 // align all the memory blocks on a cache-line boundary
+23 const int SimpleBestFitAllocator::kMemoryAlign = 32;
+
+Code Location:  
+git://github.com/sztupy/android_device_softwinner.gitandroid-2.3.7_r1
+File Path:
+  
+crane-common/overlay/hardware/libhardware/gralloc/allocator.cpp
+Copyright:
+(C) 2009 The Android Open Source Project
+File:
+allocator.cpp
+ Project: 
+FEZ Hacker port for .NET Micro Framework
+1 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+2 // Copyright (c) Microsoft Corporation.  All rights reserved.
+3 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+4
+5 #include <stddef.h>
+
+Code Location:  
+https://fezhacker.svn.codeplex.com/svn
+File Path:
+  
+TinyBooter/allocator.cpp
+File:
+allocator.cpp
+ Project: 
+FEZ Hacker port for .NET Micro Framework
+1 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+2 // Copyright (c) Microsoft Corporation.  All rights reserved.
+3 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+4
+5 #include <stddef.h>
+
+Code Location:  
+https://fezhacker.svn.codeplex.com/svn
+File Path:
+  
+TinyCLR/allocator.cpp
+File:
+allocator.cpp
+ Project: 
+EMICHAG
+1 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+2 // 
+3 // 
+4 // This file is part of the Microsoft .NET Micro Framework Porting Kit Code Samples and is unsupported. 
+5 // Copyright (C) Microsoft Corporation. All rights reserved. Use of this sample source code is subject to
+
+Code Location:  
+https://emichag.svn.codeplex.com/svn
+File Path:
+  
+4.2_LWIP/TinyBooter/allocator.cpp
+  
+4.1_RTIP/TinyBooter/allocator.cpp
+  
+4.1_LWIP/TinyBooter/allocator.cpp
+File:
+allocator.cpp
+ Project: 
+EMICHAG
+1 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+2 // 
+3 // 
+4 // This file is part of the Microsoft .NET Micro Framework Porting Kit Code Samples and is unsupported. 
+5 // Copyright (C) Microsoft Corporation. All rights reserved. Use of this sample source code is subject to
+
+Code Location:  
+https://emichag.svn.codeplex.com/svn
+File Path:
+  
+4.2_LWIP/TinyCLR/allocator.cpp
+  
+4.1_LWIP/TinyCLR/allocator.cpp
+  
+4.1_RTIP/TinyCLR/allocator.cpp
